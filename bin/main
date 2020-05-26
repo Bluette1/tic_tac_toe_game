@@ -1,2 +1,99 @@
 #!/usr/bin/env ruby
-puts "Hello world!"
+
+def game_on question
+
+    puts question
+    reply = gets.chomp.downcase
+
+    while reply != 'yes' && reply != 'no'
+        puts 'Please answer "yes" or "no".'
+        puts question
+        reply = gets.chomp.downcase
+    end
+
+    if reply == 'yes'
+        return true
+    end
+    return false
+end
+
+def choose_mark player
+    puts "Please enter the mark for " +player + "."
+    reply = gets.chomp.downcase
+
+    while reply != 'x' && reply != 'o'
+        puts 'Please answer "x" or "o".'
+        puts question
+        reply = gets.chomp.downcase
+    end
+    return reply
+end
+
+def playing first_player, second_player
+    # initialise the game
+    # choose the first current player randomly
+    # Exit game when it ends: win or draw
+
+    # Ask the current player to choose a position on the board, based on current positions
+    results = "winner: " + first_player
+    return results
+end
+
+def say_bye
+    puts "###############Thank you! We look forward to seeing you again. ##############"
+    puts "please visit the tic tac toe website (https://en.wikipedia.org/wiki/Tic-tac-toe) for tips and encouragement."
+    puts "good bye..."
+end
+
+puts "Hello there. Welcome to the tic tac toe game..."
+game_count = 0
+score_first_player = 0
+score_second_player = 0
+first_player = ""
+second_player = ""
+play = game_on("Would you like to start playing?")
+while play
+    puts "#########Game is starting############"
+    if game_count.zero?
+
+        puts "Please enter the name of the first player."
+        first_player = gets.chomp
+
+        puts "Please enter the name of the second player."
+        second_player = gets.chomp
+    end
+
+    first_player_mark = choose_mark(first_player)
+    first_player_details = first_player + ": " + first_player_mark
+    puts first_player_details
+    second_player_mark = choose_mark(second_player)
+    second_player_details = second_player + ": " + second_player_mark
+    puts second_player_details
+
+    puts "The game has now started. All the best..."
+    
+    game_count += 1
+
+    results = playing first_player_details, second_player_details
+    if results.split(": ")[1] == first_player
+        score_first_player += 1
+    
+    elsif results.split(": ")[1] == second_player
+        score_second_player += 1
+    
+    else
+        score_first_player += 1
+        score_second_player += 1
+    end
+    keep_score = {
+        "number_of_games"=> game_count,
+        "first_player" => score_first_player,
+        "second_player" => score_second_player
+    }
+    puts keep_score
+
+    play = game_on("Would you like to continue playing?")
+
+end
+
+say_bye
