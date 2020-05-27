@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require_relative '../lib/game'
+
 def game_on question
 
     puts question
@@ -18,12 +20,11 @@ def game_on question
 end
 
 def choose_mark player
-    puts "Please enter the mark for " +player + "."
+    puts "Please enter the mark for " + player + "."
     reply = gets.chomp.downcase
 
     while reply != 'x' && reply != 'o'
         puts 'Please answer "x" or "o".'
-        puts question
         reply = gets.chomp.downcase
     end
     return reply
@@ -31,12 +32,10 @@ end
 
 def playing first_player, second_player
     # initialise the game
-    # choose the first current player randomly
-    # Exit game when it ends: win or draw
+    game = Game.new(first_player, second_player)
 
-    # Ask the current player to choose a position on the board, based on current positions
-    results = "winner: " + first_player
-    return results
+    game.get_winner
+
 end
 
 def say_bye
@@ -75,6 +74,7 @@ while play
     game_count += 1
 
     results = playing first_player_details, second_player_details
+    print results
     if results.split(": ")[1] == first_player
         score_first_player += 1
     
@@ -87,8 +87,8 @@ while play
     end
     keep_score = {
         "number_of_games"=> game_count,
-        "first_player" => score_first_player,
-        "second_player" => score_second_player
+        first_player => score_first_player,
+        second_player => score_second_player
     }
     puts keep_score
 
